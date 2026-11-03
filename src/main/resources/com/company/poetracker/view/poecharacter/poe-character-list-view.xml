@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://poeCharacterListView.title"
+      focusComponent="poeCharactersDataGrid">
+    <data>
+        <collection id="poeCharactersDc"
+                    class="com.company.poetracker.entity.PoeCharacter">
+            <fetchPlan extends="_base">
+                <property name="user" fetchPlan="_base"/>
+                <property name="league" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="poeCharactersDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from PoeCharacter e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="poeCharactersDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" wrap="true" width="100%">
+            <startSlot>
+                <button id="createButton" action="poeCharactersDataGrid.createAction"/>
+                <button id="editButton" action="poeCharactersDataGrid.editAction"/>
+                <button id="removeButton" action="poeCharactersDataGrid.removeAction"/>
+            </startSlot>
+            <endSlot>
+                <simplePagination id="pagination" dataLoader="poeCharactersDl"/>
+            </endSlot>
+        </hbox>
+        <dataGrid id="poeCharactersDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="poeCharactersDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="createAction" type="list_create"/>
+                <action id="editAction" type="list_edit"/>
+                <action id="removeAction" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="user"/>
+                <column property="name"/>
+                <column property="characterClass"/>
+                <column property="ascendancy"/>
+                <column property="level"/>
+                <column property="league"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

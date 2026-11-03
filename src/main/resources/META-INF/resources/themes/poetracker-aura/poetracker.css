@@ -1,0 +1,12 @@
+/* Define your styles here */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap');
+
+html {
+    color-scheme: dark;
+
+    --aura-background-color-light: #0d0b09;
+    --aura-background-color-dark: #0d0b09;
+    --aura-accent-color-light: #d4a85a;
+    --aura-accent-color-dark: #d4a85a;
+    --aura-font-family: 'Cinzel', Georgia, serif;
+}
