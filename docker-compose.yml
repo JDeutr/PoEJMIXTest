@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: poetracker
+      POSTGRES_USER: poetracker
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U poetracker -d poetracker"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 9090
+      MAIN_DATASOURCE_URL: jdbc:postgresql://db:5432/poetracker
+      MAIN_DATASOURCE_USERNAME: poetracker
+      MAIN_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      AWSFS_ACCESS_KEY: ${AWSFS_ACCESS_KEY}
+      AWSFS_SECRET_KEY: ${AWSFS_SECRET_KEY}
+      AWSFS_REGION: ${AWSFS_REGION}
+      AWSFS_BUCKET: ${AWSFS_BUCKET}
+    ports:
+      - "9090:9090"
+
+volumes:
+  pgdata:

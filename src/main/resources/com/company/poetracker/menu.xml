@@ -7,6 +7,7 @@
         <item view="PoeCharacter.list"
               title="msg://com.company.poetracker.view.poecharacter/poeCharacterListView.title"/>
         <item view="Item.list" title="msg://com.company.poetracker.view.item/itemListView.title"/>
+        <item view="PoeBuild.list" title="msg://com.company.poetracker.view.poebuild/poeBuildListView.title"/>
     </menu>
 
 </menu-config>
